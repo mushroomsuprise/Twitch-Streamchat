@@ -111,7 +111,7 @@ class EmoteBuilder:
         try:
             globalemoteurl = "https://api.7tv.app/v2/emotes/global"
             SEVENTVGLOBALS = requests.get(globalemoteurl, timeout=10).json()
-            useremoteurl = "https://api.7tv.app/v2/users/marshbag12/emotes"
+            useremoteurl = "https://api.7tv.app/v2/users/Variables.STREAMER['streamer']/emotes"
             SEVENTVUSER = requests.get(useremoteurl, timeout=10).json()
         except requests.exceptions.HTTPError as errh:
             print ("Http Error:",errh)
