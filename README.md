@@ -1,7 +1,10 @@
 # Twitch-Streamchat
 
+This is a very hastily pull out of the twitch chat browser source I created for a much more cohesive streaming tool and is likely to contain bugs. I'm also not the greatest programmer, so shield your eyes before digging in too deep.
+
 In order to use the tool, you will need to replace any instance of "\<insert client id here\>", or "\<insert client secret here\>" with your Twitch application's client ID or secret. This is in both the Chatbot.py and TAPI.py files.
 Next you will need to replace '\<insert your twitch user id here\>' in the TAPI.py file with your Twitch user ID.
+After that you will want to replace '\<insert name of channel to connect to here\>' in the Variables file with the channel name you want to connect to. This must be in all lower case.
 Last you will need to set the name for your bot in the Chatbot.py file within the __init__ function.
 
 Then just launch from the chatbox.py file. You should see a browser window pop up to authenticate your Twitch account.
