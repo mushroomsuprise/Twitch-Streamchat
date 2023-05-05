@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+<script language="JavaScript" type="text/javascript" charset="utf-8">
+
+
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+    socket.on('clear-chat', function() {
+      location.reload(true);
+  });
+
+    socket.on('new-message', function(data2, data3, mid) {
+      var newMessage = document.createElement("li");
+      newMessage.setAttribute("id", "msg" + mid);
+      var myDiv = document.getElementById('chat');
+
+      newMessage.innerHTML = "<span3>" + data2 + data3 + "</span3>";
+
+      
+      chat.append(newMessage);
+      myDiv.scrollTop = myDiv.scrollHeight;
+  });
+
+  socket.on('up-settings', function(tcfontsize, tcfontsource, tcfontcolor, tcbgcolor, tcopacity) { var x = document.querySelectorAll("li"); for (let i = 0; i < x.length; i++) {x[i].style.setProperty('font-size', tcfontsize);x[i].style.setProperty('color', tcfontcolor);chat.style.setProperty('background-color', tcbgcolor+tcopacity);}});
+  socket.on('up-font', function() {
+    location.reload(true);
+});
+
+  socket.on('removemessages', function(torem){
+    var myDiv = document.getElementById('chat');
+    console.log(torem)
+    for (let i = 0; i < torem.length; i++) {
+      var remmsg = document.getElementById("msg" + torem[i]);
+      remmsg.remove();
+    }
+    myDiv.scrollTop = myDiv.scrollHeight;
+  });
+
+</script>
+<style>
+@font-face{
+  font-family: mainfont;
+  src:  url("/static/fonts/{{Fontname}}");
+}
+
+html,body {
+  margin: 0;
+  font-family: mainfont;
+  overflow: hidden;
+}
+
+#chat {
+  background-color: {{BGColor}}{{BGOpacity}};
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+
+}
+
+#chat::-webkit-scrollbar {
+  display: none;
+}
+
+#chat li {
+  list-style-type: none;
+  background-color: rgba(0, 0, 0, 0);
+  box-sizing: border-box;
+  padding: 2px;
+  font-size: {{Fontsize}};
+  color: {{Fontcolor}};
+}
+
+#chat blockquote {
+  font-size: {{Fontsize}};
+}
+</style>
+</head>
+<body>
+  <div id="chat"></div>
+  </body
+
