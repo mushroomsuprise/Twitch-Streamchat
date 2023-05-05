@@ -1,6 +1,6 @@
 # Twitch-Streamchat
 
-In order to use the tool, you will need to replace any instance of "<insert client id here>", or "<insert client secret here>" with your Twitch application's client ID or secret. This is in both the Chatbot.py and TAPI.py files.
+In order to use the tool, you will need to replace any instance of "\<insert client id here\>", or "\<insert client secret here\>" with your Twitch application's client ID or secret. This is in both the Chatbot.py and TAPI.py files.
 Next you will need to replace '<insert your twitch user id here>' in the TAPI.py file with your Twitch user ID.
 Last you will need to set the name for your bot in the Chatbot.py file within the __init__ function.
 
