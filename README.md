@@ -1,3 +1,6 @@
+Update: tcmessageparser function in the TAPI file was updated to fix issues with some 7tv emotes not displaying
+
+
 # Twitch-Streamchat
 
 This is a very hastily pull out of the twitch chat browser source I created for a much more cohesive streaming tool and is likely to contain bugs. I'm also not the greatest programmer, so shield your eyes before digging in too deep.
