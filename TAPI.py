@@ -94,7 +94,8 @@ class EmoteBuilder:
             globalemoteurl = "https://api.betterttv.net/3/cached/emotes/global"
             BTTVGLOBALS = requests.get(globalemoteurl, timeout=10).json()
             useremoteurl = f"https://api.betterttv.net/3/cached/users/twitch/{STREAMERTWITCHID}"
-            BTTVUSER = requests.get(useremoteurl, timeout=10).json()
+            userlink = requests.get(useremoteurl, timeout=10).json()
+            BTTVUSER = userlink['channelEmotes'] + userlink['sharedEmotes']
         except requests.exceptions.HTTPError as errh:
             print ("Http Error:",errh)
         except requests.exceptions.ConnectionError as errc:
@@ -111,7 +112,7 @@ class EmoteBuilder:
         try:
             globalemoteurl = "https://api.7tv.app/v2/emotes/global"
             SEVENTVGLOBALS = requests.get(globalemoteurl, timeout=10).json()
-            useremoteurl = f"https://api.7tv.app/v2/users/{Variables.STREAMER['streamer']}/emotes"
+            useremoteurl = "https://api.7tv.app/v2/users/marshbag12/emotes"
             SEVENTVUSER = requests.get(useremoteurl, timeout=10).json()
         except requests.exceptions.HTTPError as errh:
             print ("Http Error:",errh)
@@ -185,36 +186,36 @@ class EmoteBuilder:
             if any(not c.isalnum() for c in i):
                 pass
             else:
-                if (match := search(r"'id': '[a-zA-Z0-9.\[\]\\\`\_\^\{\|\}-]{1,32}', 'code': '" + i+"'", str(BTTVGLOBALS))):
-                    msglength = len(i) + 13
-                    emoteid = match.group(0)[7:-msglength]
-                    emotelink = str(emotes.bttvlinkgen(emoteid, size='1'))
-                    messageparse = ['<img src="' + emotelink + '"/>' if item == i else item for item in messageparse]
-                    continue
-                if (match := search(r"'id': '[a-zA-Z0-9.\[\]\\\`\_\^\{\|\}-]{1,32}', 'code': '" + i+"'", str(BTTVUSER))):
-                    msglength = len(i) + 13
-                    emoteid = match.group(0)[7:-msglength]
-                    emotelink = str(emotes.bttvlinkgen(emoteid, size='1'))
-                    messageparse = ['<img src="' + emotelink + '"/>' if item == i else item for item in messageparse]
-                    continue
+                for e in BTTVGLOBALS:
+                    if e['code'] == i:
+                        emoteid = e['id']
+                        emotelink = str(emotes.bttvlinkgen(emoteid, size='1'))
+                        messageparse = ['<img src="' + emotelink + '"/>' if item == i else item for item in messageparse]
+                        continue
+                for e in BTTVUSER:
+                    if e['code'] == i:
+                        emoteid = e['id']
+                        emotelink = str(emotes.bttvlinkgen(emoteid, size='1'))
+                        messageparse = ['<img src="' + emotelink + '"/>' if item == i else item for item in messageparse]
+                        continue
                 if (match := search("'" +i+r"', 'images': {'1x': 'https://cdn.betterttv.net/frankerfacez_emote/[a-zA-Z0-9.\[\]\\`_\^\{\|\}-]{1,32}/1'", str(FFZUSER))):
                     msglength = len(i) + 67
                     emoteid = match.group(0)[msglength:-3]
                     emotelink = str(emotes.ffzlinkgen(emoteid, size='1'))
                     messageparse = ['<img src="' + emotelink + '"/>' if item == i else item for item in messageparse]
                     continue
-                if (match := search(r"'id': '[a-zA-Z0-9.\[\]\\\`\_\^\{\|\}-]{1,32}', 'name': '" + i+"'", str(SEVENTVGLOBALS))):
-                    msglength = len(i) + 13
-                    emoteid = match.group(0)[7:-msglength]
-                    emotelink = str(emotes.seventvlinkgen(emoteid, size='1'))
-                    messageparse = ['<img src="' + emotelink + '"/>' if item == i else item for item in messageparse]
-                    continue
-                if (match := search(r"'id': '[a-zA-Z0-9.\[\]\\\`\_\^\{\|\}-]{1,32}', 'name': '" + i+"'", str(SEVENTVUSER))):
-                    msglength = len(i) + 13
-                    emoteid = match.group(0)[7:-msglength]
-                    emotelink = str(emotes.seventvlinkgen(emoteid, size='1'))
-                    messageparse = ['<img src="' + emotelink + '"/>' if item == i else item for item in messageparse]
-                    continue
+                for e in SEVENTVGLOBALS:
+                    if e['name'] == i:
+                        emoteid = e['id']
+                        emotelink = str(emotes.seventvlinkgen(emoteid, size='1'))
+                        messageparse = ['<img src="' + emotelink + '"/>' if item == i else item for item in messageparse]
+                        continue
+                for e in SEVENTVUSER:
+                    if e['name'] == i:
+                        emoteid = e['id']
+                        emotelink = str(emotes.seventvlinkgen(emoteid, size='1'))
+                        messageparse = ['<img src="' + emotelink + '"/>' if item == i else item for item in messageparse]
+                        continue
         newmessage = ' '.join(messageparse)
         return newmessage
 
