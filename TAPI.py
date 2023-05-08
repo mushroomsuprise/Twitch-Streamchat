@@ -166,7 +166,7 @@ class EmoteBuilder:
 
     def seventvlinkgen(self, emoteid, size):
         """Function for building 7tv emote links."""
-        emoteurl = f"https://cdn.7tv.app/emote/{emoteid}/{size}x"
+        emoteurl = f"https://cdn.7tv.app/emote/{emoteid}/{size}x.webp"
         return emoteurl
 
     def ffzlinkgen(self, emoteid, size):
